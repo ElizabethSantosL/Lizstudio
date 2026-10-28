@@ -8,7 +8,866 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-…        // Initialize App
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        cream: '#FDFBF7',
+                        'cream-card': '#FAF6F0',
+                        pine: '#2D4A3E',
+                        'pine-dark': '#1E332B',
+                        crimson: '#8B3A3A',
+                        'crimson-light': '#9E4242',
+                        gold: '#C5A059',
+                        'gold-light': '#E8D5B5',
+                        taupe: '#4A4540',
+                        'taupe-muted': '#7A7570'
+                    },
+                    fontFamily: {
+                        heading: ['Playfair Display', 'serif'],
+                        body: ['Montserrat', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #FDFBF7;
+            color: #4A4540;
+            overflow-x: hidden;
+        }
+
+        .font-heading {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* Subtle Holiday Snow Effect */
+        .snowflake {
+            color: rgba(197, 160, 89, 0.35);
+            font-size: 1rem;
+            position: fixed;
+            top: -10px;
+            z-index: 1;
+            user-select: none;
+            cursor: default;
+            animation-name: snowflakes-fall, snowflakes-shake;
+            animation-duration: 10s, 3s;
+            animation-timing-function: linear, ease-in-out;
+            animation-iteration-count: infinite, infinite;
+            animation-play-state: running, running;
+            pointer-events: none;
+        }
+
+        @keyframes snowflakes-fall {
+            0% { top: -10%; }
+            100% { top: 100%; }
+        }
+
+        @keyframes snowflakes-shake {
+            0% { transform: translateX(0px); }
+            50% { transform: translateX(40px); }
+            100% { transform: translateX(0px); }
+        }
+
+        .sf-1 { left: 5%; animation-delay: 0s, 0s; }
+        .sf-2 { left: 20%; animation-delay: 2s, 1s; }
+        .sf-3 { left: 35%; animation-delay: 4s, 2s; }
+        .sf-4 { left: 50%; animation-delay: 1s, 1s; }
+        .sf-5 { left: 65%; animation-delay: 5s, 3s; }
+        .sf-6 { left: 80%; animation-delay: 3s, 1.5s; }
+        .sf-7 { left: 92%; animation-delay: 7s, 2.5s; }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #FDFBF7;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #E8D5B5;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #C5A059;
+        }
+
+        /* Festive Border Accent */
+        .gold-border-gradient {
+            border-image: linear-gradient(90deg, rgba(197,160,89,0.2) 0%, rgba(197,160,89,0.8) 50%, rgba(197,160,89,0.2) 100%) 1;
+        }
+
+        /* Drawer Overlay */
+        .drawer-overlay {
+            background-color: rgba(30, 51, 43, 0.4);
+            backdrop-filter: blur(4px);
+            transition: opacity 0.3s ease;
+        }
+
+        /* Card Hover Effects */
+        .product-card {
+            transition: transform 0.3s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.3s ease;
+        }
+        .product-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 16px 30px -10px rgba(45, 74, 62, 0.12);
+        }
+    </style>
+</head>
+<body class="bg-cream min-h-screen flex flex-col relative selection:bg-gold-light selection:text-pine">
+
+    <!-- Ambient Snowflakes (Minimalist) -->
+    <div class="snowflake sf-1">❄</div>
+    <div class="snowflake sf-2">✦</div>
+    <div class="snowflake sf-3">❄</div>
+    <div class="snowflake sf-4">✧</div>
+    <div class="snowflake sf-5">❄</div>
+    <div class="snowflake sf-6">✦</div>
+    <div class="snowflake sf-7">❄</div>
+
+    <!-- Top Announcement Bar -->
+    <div class="bg-pine text-cream text-xs sm:text-sm py-2 px-4 text-center tracking-widest uppercase font-medium flex items-center justify-center gap-2 border-b border-gold/30">
+        <span class="text-gold">✧</span>
+        <span>Coleção Especial de Natal - Liz Studio 3D</span>
+        <span class="text-gold">✧</span>
+    </div>
+
+    <!-- Main Header -->
+    <header class="py-8 px-4 text-center border-b border-gold-light/40 relative bg-cream/80 backdrop-blur-sm z-10">
+        <div class="max-w-4xl mx-auto">
+            <!-- Christmas Wreath / Tree Motif -->
+            <div class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-pine/5 text-pine mb-3">
+                <i class="fa-solid fa-tree text-xl text-pine"></i>
+            </div>
+            
+            <h1 class="font-heading text-3xl sm:text-5xl font-bold tracking-wider text-pine uppercase mb-2">
+                Liz Studio
+            </h1>
+            <p class="text-xs sm:text-sm tracking-widest text-crimson font-semibold uppercase mb-3">
+                Catálogo Digital • Edição Natalina 🎄
+            </p>
+            <p class="text-sm text-taupe-muted max-w-md mx-auto italic font-heading">
+                "Modelos 3D e props artesanais criados com delicadeza para abrilhantar seus ensaios e produções."
+            </p>
+            
+            <div class="mt-4 flex items-center justify-center gap-4 text-xs tracking-wider text-taupe">
+                <a href="https://instagram.com/lizstudio3d" target="_blank" class="hover:text-gold transition-colors flex items-center gap-1.5">
+                    <i class="fa-brands fa-instagram text-sm text-crimson"></i> @lizstudio3d
+                </a>
+                <span class="text-gold">•</span>
+                <a href="https://wa.me/5585992060056" target="_blank" class="hover:text-gold transition-colors flex items-center gap-1.5">
+                    <i class="fa-brands fa-whatsapp text-sm text-pine"></i> (85) 99206-0056
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sticky Navigation & Search Controls -->
+    <nav class="sticky top-0 z-30 bg-cream/95 backdrop-blur-md border-b border-gold-light/50 shadow-sm py-4 px-4">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+            
+            <!-- Category Filters -->
+            <div class="flex flex-wrap justify-center gap-2 w-full md:w-auto">
+                <button onclick="filterCategory('all')" id="btn-all" class="cat-btn px-4 py-2 rounded-full text-xs sm:text-sm font-medium tracking-wide transition-all bg-pine text-cream shadow-sm">
+                    ✨ Todos
+                </button>
+                <button onclick="filterCategory('confeitaria')" id="btn-confeitaria" class="cat-btn px-4 py-2 rounded-full text-xs sm:text-sm font-medium tracking-wide transition-all bg-white text-taupe hover:bg-gold-light/30 border border-gold-light/60">
+                    🎂 Confeitaria
+                </button>
+                <button onclick="filterCategory('props')" id="btn-props" class="cat-btn px-4 py-2 rounded-full text-xs sm:text-sm font-medium tracking-wide transition-all bg-white text-taupe hover:bg-gold-light/30 border border-gold-light/60">
+                    📱 Props Realistas
+                </button>
+                <button onclick="filterCategory('religiosa')" id="btn-religiosa" class="cat-btn px-4 py-2 rounded-full text-xs sm:text-sm font-medium tracking-wide transition-all bg-white text-taupe hover:bg-gold-light/30 border border-gold-light/60">
+                    🕊️ Linha Religiosa
+                </button>
+            </div>
+
+            <!-- Search Bar & Cart Button -->
+            <div class="flex items-center gap-3 w-full md:w-auto justify-end">
+                <div class="relative flex-grow md:w-64">
+                    <input type="text" id="search-input" oninput="handleSearch()" placeholder="Buscar produto..." 
+                        class="w-full pl-9 pr-4 py-2 bg-white rounded-full text-xs sm:text-sm border border-gold-light/80 focus:outline-none focus:ring-2 focus:ring-pine/30 text-taupe placeholder-taupe-muted/60">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-taupe-muted text-xs"></i>
+                </div>
+
+                <!-- Shopping Bag Toggle Trigger -->
+                <button onclick="toggleCartDrawer()" class="relative bg-pine hover:bg-pine-dark text-cream p-2.5 px-4 rounded-full flex items-center gap-2 transition-all shadow-md">
+                    <i class="fa-solid fa-basket-shopping text-sm text-gold"></i>
+                    <span class="text-xs font-semibold tracking-wider hidden sm:inline">Pedido</span>
+                    <span id="cart-badge" class="bg-crimson text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center border border-white">0</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Container -->
+    <main class="flex-grow max-w-6xl w-full mx-auto px-4 py-8">
+        
+        <!-- Seasonal Greeting Banner -->
+        <div class="mb-10 p-6 rounded-2xl bg-gradient-to-r from-pine/5 via-cream-card to-crimson/5 border border-gold-light/50 text-center relative overflow-hidden">
+            <div class="absolute -right-4 -bottom-4 text-pine/5 text-8xl pointer-events-none">🎄</div>
+            <div class="relative z-10">
+                <h2 class="font-heading text-xl sm:text-2xl text-pine font-bold mb-1">
+                    Monte seu Carrinho de Encomendas
+                </h2>
+                <p class="text-xs sm:text-sm text-taupe-muted max-w-xl mx-auto">
+                    Selecione os itens desejados e clique em <strong class="text-pine">"Enviar para o WhatsApp"</strong> para solicitar seu orçamento personalizado diretamente com o estúdio.
+                </p>
+            </div>
+        </div>
+
+        <!-- Section Title Dynamic Indicator -->
+        <div class="flex items-center justify-between mb-6 pb-2 border-b border-gold-light/40">
+            <h2 id="current-category-title" class="font-heading text-2xl text-pine font-semibold flex items-center gap-2">
+                <span>Catálogo Completo</span>
+            </h2>
+            <span id="product-count" class="text-xs text-taupe-muted font-medium">19 itens encontrados</span>
+        </div>
+
+        <!-- Products Grid Container -->
+        <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <!-- Cards generated dynamically via JavaScript -->
+        </div>
+
+        <!-- Empty Search State -->
+        <div id="empty-state" class="hidden text-center py-16">
+            <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-crimson/10 text-crimson flex items-center justify-center text-2xl">
+                <i class="fa-solid fa-cookie"></i>
+            </div>
+            <h3 class="font-heading text-xl font-bold text-pine mb-1">Nenhum produto encontrado</h3>
+            <p class="text-sm text-taupe-muted">Tente ajustar sua busca ou escolher outra categoria.</p>
+            <button onclick="resetFilters()" class="mt-4 px-4 py-2 bg-pine text-cream text-xs rounded-full hover:bg-pine-dark transition-colors">
+                Ver todos os produtos
+            </button>
+        </div>
+    </main>
+
+    <!-- Shopping Bag Drawer (Slide-Over) -->
+    <div id="cart-drawer" class="fixed inset-0 z-50 pointer-events-none">
+        <!-- Backdrop -->
+        <div id="cart-backdrop" onclick="toggleCartDrawer()" class="drawer-overlay absolute inset-0 opacity-0 pointer-events-none transition-opacity"></div>
+        
+        <!-- Panel -->
+        <div id="cart-panel" class="absolute right-0 top-0 bottom-0 w-full max-w-md bg-cream shadow-2xl transform translate-x-full transition-transform duration-300 ease-out pointer-events-auto flex flex-col border-l border-gold-light">
+            
+            <!-- Drawer Header -->
+            <div class="p-5 border-b border-gold-light/60 bg-pine text-cream flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-gift text-gold text-lg"></i>
+                    <h3 class="font-heading text-lg font-semibold tracking-wide">Seu Pedido de Natal</h3>
+                </div>
+                <button onclick="toggleCartDrawer()" class="w-8 h-8 rounded-full hover:bg-white/10 flex items-center justify-center text-cream transition-colors">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+
+            <!-- Cart Items List -->
+            <div id="cart-items-container" class="flex-grow overflow-y-auto p-5 space-y-4">
+                <!-- Dynamic Cart Items -->
+            </div>
+
+            <!-- Cart Footer & Checkout -->
+            <div class="p-5 border-t border-gold-light/60 bg-cream-card">
+                <div class="space-y-2 mb-4">
+                    <div class="flex justify-between text-xs text-taupe-muted">
+                        <span>Total estimado</span>
+                        <span id="cart-subtotal" class="font-semibold text-taupe">R$ 0,00</span>
+                    </div>
+                    <div class="flex justify-between text-base font-bold text-pine font-heading pt-2 border-t border-gold-light/30">
+                        <span>Valor Total</span>
+                        <span id="cart-total" class="text-crimson">R$ 0,00</span>
+                    </div>
+                </div>
+
+                <button onclick="sendWhatsAppOrder()" class="w-full py-3.5 bg-pine hover:bg-pine-dark text-cream rounded-xl font-medium text-sm tracking-wide shadow-lg flex items-center justify-center gap-2 transition-all">
+                    <i class="fa-brands fa-whatsapp text-lg text-emerald-400"></i>
+                    <span>Finalizar no WhatsApp</span>
+                </button>
+                <p class="text-[11px] text-center text-taupe-muted mt-2">
+                    Você será redirecionado para enviar o pedido diretamente para a Liz Studio.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick View Product Modal -->
+    <div id="quickview-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-pine-dark/50 backdrop-blur-sm">
+        <div class="bg-cream rounded-2xl max-w-lg w-full overflow-hidden shadow-2xl border border-gold-light relative animate-fade-in">
+            <button onclick="closeQuickView()" class="absolute right-4 top-4 w-9 h-9 rounded-full bg-cream/80 hover:bg-cream text-taupe flex items-center justify-center z-10 transition-colors shadow">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            
+            <div id="quickview-content" class="p-6">
+                <!-- Content injected via JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-pine text-cream border-t border-gold/30 mt-16 pt-12 pb-8 px-4 relative overflow-hidden">
+        <!-- Subtle Festive Ornament Overlay -->
+        <div class="max-w-4xl mx-auto text-center space-y-6 relative z-10">
+            <div class="font-heading text-2xl font-bold text-gold tracking-widest uppercase">
+                Liz Studio 3D
+            </div>
+            
+            <p class="text-xs sm:text-sm text-cream/80 max-w-md mx-auto leading-relaxed">
+                Peças exclusivas produzidas com tecnologia 3D e acabamento artesanal refinado. Transformando cenários em experiências memoráveis.
+            </p>
+
+            <div class="flex items-center justify-center gap-6 pt-2">
+                <a href="https://instagram.com/lizstudio3d" target="_blank" class="w-10 h-10 rounded-full bg-white/10 hover:bg-gold/20 flex items-center justify-center text-gold transition-all hover:scale-110">
+                    <i class="fa-brands fa-instagram text-lg"></i>
+                </a>
+                <a href="https://wa.me/5585992060056" target="_blank" class="w-10 h-10 rounded-full bg-white/10 hover:bg-gold/20 flex items-center justify-center text-gold transition-all hover:scale-110">
+                    <i class="fa-brands fa-whatsapp text-lg"></i>
+                </a>
+            </div>
+
+            <div class="pt-8 border-t border-white/10 text-[11px] text-cream/50 tracking-wider">
+                &copy; <span id="year"></span> Liz Studio. Todos os direitos reservados. Feito com amor para o seu Natal. 🎄
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Data and Application Logic -->
+    <script>
+        // Set dynamic copyright year
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Product Catalog Data
+        const productsData = [
+            // Confeitaria & Cenografia
+            {
+                id: 'conf-1',
+                name: 'Massa de bolo',
+                category: 'confeitaria',
+                categoryName: 'Confeitaria & Cenografia',
+                price: 49.90,
+                image: 'massadebolo.jpg',
+                description: 'Base realista de massa de bolo para composições fotográficas, ensaios Smash the Cake ou cenários de confeitaria.'
+            },
+            {
+                id: 'conf-2',
+                name: 'Kit chantilly',
+                category: 'confeitaria',
+                categoryName: 'Confeitaria & Cenografia',
+                price: 35.90,
+                image: 'chantillyazul.jpg',
+                description: 'Acessório cenográfico para complementar composições de bolos com efeito super natural.'
+            },
+            {
+                id: 'conf-3',
+                name: 'Vela unitária "One"',
+                category: 'confeitaria',
+                categoryName: 'Confeitaria & Cenografia',
+                price: 8.90,
+                image: 'velaone.jpg',
+                description: 'Vela decorativa com tipografia elegante "One", perfeita para aniversários de 1 ano.'
+            },
+            {
+                id: 'conf-4',
+                name: 'Kit completo (Massa + Chantilly + Vela)',
+                category: 'confeitaria',
+                categoryName: 'Confeitaria & Cenografia',
+                price: 74.90,
+                image: 'bolocompletovelarosa.jpg',
+                description: 'Combinação perfeita e pronta para fotos! Inclui a massa, cobertura cenográfica e vela especial.'
+            },
+            {
+                id: 'conf-5',
+                name: 'Kit Duplo (Massa + 2 Chantilly)',
+                category: 'confeitaria',
+                categoryName: 'Confeitaria & Cenografia',
+                price: 99.90,
+                image: 'kitmassachantily.jpg',
+                description: 'Conjunto expandido para bolos de dois andares ou composições de maior destaque visual.'
+            },
+            {
+                id: 'conf-6',
+                name: 'Bolo vintage',
+                category: 'confeitaria',
+                categoryName: 'Confeitaria & Cenografia',
+                price: 69.90,
+                image: 'bolovintage.jpg',
+                description: 'Design retrô sofisticado, inspirado em bolos clássicos com detalhes de lambrequins e rococós.'
+            },
+            {
+                id: 'conf-7',
+                name: 'Cupcake (Tamanho Maior)',
+                category: 'confeitaria',
+                categoryName: 'Confeitaria & Cenografia',
+                price: 34.90,
+                image: 'cupcakeG.jpg',
+                description: 'Mini bolo individual cenográfico em escala maior, ideal para fotos de acompanhamento.'
+            },
+            {
+                id: 'conf-8',
+                name: 'Cupcake (Tamanho Menor)',
+                category: 'confeitaria',
+                categoryName: 'Confeitaria & Cenografia',
+                price: 17.90,
+                image: 'cupcakeP.jpg',
+                description: 'Pequeno prop delicado para detalhes em cenários fotográficos e festas temáticas.'
+            },
+
+            // Props Realistas & Estilo de Vida
+            {
+                id: 'prop-1',
+                name: 'Mini iPhone 17 PRO',
+                category: 'props',
+                categoryName: 'Props Realistas',
+                price: 14.90,
+                image: 'iphone.jpg',
+                description: 'Réplica ultra detalhada em miniatura do iPhone 17 PRO para enriquecer ensaios corporativos ou infantis.'
+            },
+            {
+                id: 'prop-2',
+                name: 'Mini MacBook',
+                category: 'props',
+                categoryName: 'Props Realistas',
+                price: 24.90,
+                image: 'minimacbook.jpg',
+                description: 'Miniatura perfeita de notebook em estilo MacBook, ótima para produções temáticas de home office ou estúdio.'
+            },
+            {
+                id: 'prop-3',
+                name: 'Mini Câmera',
+                category: 'props',
+                categoryName: 'Props Realistas',
+                price: 14.90,
+                image: 'minicamera.jpg',
+                description: 'Câmera fotográfica em escala reduzida com acabamento realista de lente e corpo.'
+            },
+            {
+                id: 'prop-4',
+                name: 'Microfone c/ suporte',
+                category: 'props',
+                categoryName: 'Props Realistas',
+                price: 24.90,
+                image: 'microfonecsuporte.jpg',
+                description: 'Microfone estilizado com pedestal de mesa, perfeito para cenários de podcast e música.'
+            },
+            {
+                id: 'prop-5',
+                name: 'Mini Microfone',
+                category: 'props',
+                categoryName: 'Props Realistas',
+                price: 14.90,
+                image: 'minimicrofone.jpg',
+                description: 'Versão portátil e charmosa de microfone cenográfico.'
+            },
+            {
+                id: 'prop-6',
+                name: 'Copo Starbucks',
+                category: 'props',
+                categoryName: 'Props Realistas',
+                price: 24.90,
+                image: 'copostarbucks.jpg',
+                description: 'Copo térmico cenográfico estilo café icônico para composições cotidianas e lifestyle.'
+            },
+            {
+                id: 'prop-7',
+                name: 'Copo Stanley',
+                category: 'props',
+                categoryName: 'Props Realistas',
+                price: 24.90,
+                image: 'copostanley.jpg',
+                description: 'Prop do famoso copo térmico com detalhes fiéis para fotos modernas.'
+            },
+            {
+                id: 'prop-8',
+                name: 'Mini Livro',
+                category: 'props',
+                categoryName: 'Props Realistas',
+                price: 11.90,
+                image: 'minilivro.jpg',
+                description: 'Acessório delicado em formato de livro para compor fotos de leitura e estudos.'
+            },
+
+            // Linha Religiosa
+            {
+                id: 'rel-1',
+                name: 'Jesus em pé (Efeito tricô)',
+                category: 'religiosa',
+                categoryName: 'Linha Religiosa',
+                price: 24.90,
+                image: 'minijesusempe.jpg',
+                description: 'Escultura com textura exclusiva que simula trabalho artesanal em tricô/amigurumi.'
+            },
+            {
+                id: 'rel-2',
+                name: 'Mini Jesus sentado',
+                category: 'religiosa',
+                categoryName: 'Linha Religiosa',
+                price: 14.90,
+                image: 'minijesussentado.jpg',
+                description: 'Peça graciosa para nichos, ensaios infantis e lembranças afetivas.'
+            },
+            {
+                id: 'rel-3',
+                name: 'Mini Bíblia',
+                category: 'religiosa',
+                categoryName: 'Linha Religiosa',
+                price: 19.90,
+                image: 'biblia.jpg',
+                description: 'Réplica de Bíblia Sagrada com acabamento suave e elegância minimalista.'
+            }
+        ];
+
+        // Application State
+        let currentCategory = 'all';
+        let searchQuery = '';
+        let cart = [];
+
+        // Format Currency Helper
+        function formatMoney(val) {
+            return val.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+        }
+
+        // SVG Placeholder Generator for missing local images
+        function getSVGPlaceholder(title, cat) {
+            const icons = {
+                confeitaria: '🍰',
+                props: '📱',
+                religiosa: '🕊️'
+            };
+            const icon = icons[cat] || '🎁';
+            
+            return `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300" viewBox="0 0 400 300"><rect width="100%" height="100%" fill="%23FAF6F0"/><rect x="10%" y="10%" width="80%" height="80%" fill="%23FDFBF7" rx="12" stroke="%23E8D5B5" stroke-width="2"/><text x="50%" y="42%" font-family="Playfair Display, serif" font-size="42" fill="%232D4A3E" text-anchor="middle" dominant-baseline="middle">${icon}</text><text x="50%" y="65%" font-family="Montserrat, sans-serif" font-size="14" font-weight="600" fill="%234A4540" text-anchor="middle" dominant-baseline="middle">${encodeURIComponent(title)}</text><text x="50%" y="78%" font-family="Montserrat, sans-serif" font-size="11" fill="%238B3A3A" text-anchor="middle" dominant-baseline="middle">Liz Studio 3D</text></svg>`;
+        }
+
+        // Render Product Cards
+        function renderProducts() {
+            const grid = document.getElementById('products-grid');
+            const emptyState = document.getElementById('empty-state');
+            grid.innerHTML = '';
+
+            const filtered = productsData.filter(item => {
+                const matchesCat = currentCategory === 'all' || item.category === currentCategory;
+                const matchesSearch = item.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                                      item.categoryName.toLowerCase().includes(searchQuery.toLowerCase());
+                return matchesCat && matchesSearch;
+            });
+
+            document.getElementById('product-count').textContent = `${filtered.length} ${filtered.length === 1 ? 'item encontrado' : 'itens encontrados'}`;
+
+            if (filtered.length === 0) {
+                emptyState.classList.remove('hidden');
+                grid.classList.add('hidden');
+                return;
+            } else {
+                emptyState.classList.add('hidden');
+                grid.classList.remove('hidden');
+            }
+
+            filtered.forEach(product => {
+                const fallbackImg = getSVGPlaceholder(product.name, product.category);
+                const card = document.createElement('div');
+                card.className = 'product-card bg-white rounded-2xl overflow-hidden border border-gold-light/60 flex flex-col justify-between relative group';
+                
+                card.innerHTML = `
+                    <!-- Category Tag -->
+                    <div class="absolute top-3 left-3 z-10">
+                        <span class="bg-cream/90 backdrop-blur-md text-pine font-medium text-[10px] uppercase tracking-wider px-2.5 py-1 rounded-full border border-gold-light/60 shadow-sm">
+                            ${product.category === 'confeitaria' ? '🎂 Confeitaria' : product.category === 'props' ? '📱 Props' : '🕊️ Religiosa'}
+                        </span>
+                    </div>
+
+                    <!-- Image Header -->
+                    <div class="relative h-52 bg-cream-card overflow-hidden cursor-pointer" onclick="openQuickView('${product.id}')">
+                        <img src="${product.image}" 
+                             onerror="this.src='${fallbackImg}'" 
+                             alt="${product.name}" 
+                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-pine/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                            <span class="bg-cream text-pine text-xs font-semibold px-3 py-1.5 rounded-full shadow-md transform translate-y-2 group-hover:translate-y-0 transition-all">
+                                <i class="fa-regular fa-eye mr-1"></i> Espiar
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Card Body -->
+                    <div class="p-4 flex-grow flex flex-col justify-between">
+                        <div>
+                            <h3 class="font-heading font-semibold text-base text-pine mb-1 line-clamp-1 group-hover:text-crimson transition-colors" onclick="openQuickView('${product.id}')">
+                                ${product.name}
+                            </h3>
+                            <p class="text-xs text-taupe-muted line-clamp-2 mb-3">
+                                ${product.description}
+                            </p>
+                        </div>
+
+                        <!-- Price & Action -->
+                        <div class="pt-3 border-t border-gold-light/30 flex items-center justify-between mt-auto">
+                            <div>
+                                <span class="text-[10px] text-taupe-muted block uppercase tracking-wider">Valor</span>
+                                <span class="font-heading font-bold text-base text-crimson">
+                                    ${formatMoney(product.price)}
+                                </span>
+                            </div>
+
+                            <button onclick="addToCart('${product.id}')" class="bg-pine hover:bg-pine-dark text-cream w-9 h-9 rounded-full flex items-center justify-center transition-all shadow-sm hover:scale-105 active:scale-95" title="Adicionar ao pedido">
+                                <i class="fa-solid fa-plus text-xs text-gold"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Category Filter Controller
+        function filterCategory(cat) {
+            currentCategory = cat;
+            
+            // Update active button state
+            document.querySelectorAll('.cat-btn').forEach(btn => {
+                btn.className = 'cat-btn px-4 py-2 rounded-full text-xs sm:text-sm font-medium tracking-wide transition-all bg-white text-taupe hover:bg-gold-light/30 border border-gold-light/60';
+            });
+
+            const activeBtn = document.getElementById(`btn-${cat}`);
+            if (activeBtn) {
+                activeBtn.className = 'cat-btn px-4 py-2 rounded-full text-xs sm:text-sm font-medium tracking-wide transition-all bg-pine text-cream shadow-sm';
+            }
+
+            // Update title
+            const titles = {
+                all: 'Catálogo Completo',
+                confeitaria: '🎂 Confeitaria & Cenografia',
+                props: '📱 Props Realistas',
+                religiosa: '🕊️ Linha Religiosa'
+            };
+            document.getElementById('current-category-title').innerText = titles[cat];
+
+            renderProducts();
+        }
+
+        // Search Input Controller
+        function handleSearch() {
+            searchQuery = document.getElementById('search-input').value;
+            renderProducts();
+        }
+
+        function resetFilters() {
+            document.getElementById('search-input').value = '';
+            searchQuery = '';
+            filterCategory('all');
+        }
+
+        // Cart Drawer Handlers
+        function toggleCartDrawer() {
+            const drawer = document.getElementById('cart-drawer');
+            const backdrop = document.getElementById('cart-backdrop');
+            const panel = document.getElementById('cart-panel');
+
+            if (panel.classList.contains('translate-x-full')) {
+                // Open
+                drawer.classList.remove('pointer-events-none');
+                backdrop.classList.remove('opacity-0', 'pointer-events-none');
+                backdrop.classList.add('opacity-100');
+                panel.classList.remove('translate-x-full');
+            } else {
+                // Close
+                panel.classList.add('translate-x-full');
+                backdrop.classList.remove('opacity-100');
+                backdrop.classList.add('opacity-0', 'pointer-events-none');
+                setTimeout(() => {
+                    drawer.classList.add('pointer-events-none');
+                }, 300);
+            }
+        }
+
+        // Add Product to Cart
+        function addToCart(productId) {
+            const product = productsData.find(p => p.id === productId);
+            if (!product) return;
+
+            const existing = cart.find(item => item.id === productId);
+            if (existing) {
+                existing.quantity += 1;
+            } else {
+                cart.push({ ...product, quantity: 1 });
+            }
+
+            updateCartUI();
+            
+            // Subtle notification animation on cart button
+            const badge = document.getElementById('cart-badge');
+            badge.classList.add('scale-125');
+            setTimeout(() => badge.classList.remove('scale-125'), 200);
+        }
+
+        // Update Item Quantity in Cart
+        function updateQuantity(productId, delta) {
+            const item = cart.find(i => i.id === productId);
+            if (!item) return;
+
+            item.quantity += delta;
+            if (item.quantity <= 0) {
+                cart = cart.filter(i => i.id !== productId);
+            }
+
+            updateCartUI();
+        }
+
+        // Remove Item Completely
+        function removeFromCart(productId) {
+            cart = cart.filter(i => i.id !== productId);
+            updateCartUI();
+        }
+
+        // Update Cart Drawer UI
+        function updateCartUI() {
+            const container = document.getElementById('cart-items-container');
+            const badge = document.getElementById('cart-badge');
+            const totalElem = document.getElementById('cart-total');
+            const subtotalElem = document.getElementById('cart-subtotal');
+
+            const totalCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+            const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+
+            badge.textContent = totalCount;
+            totalElem.textContent = formatMoney(totalPrice);
+            subtotalElem.textContent = formatMoney(totalPrice);
+
+            if (cart.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-12 text-taupe-muted">
+                        <div class="w-16 h-16 mx-auto mb-3 rounded-full bg-gold-light/30 flex items-center justify-center text-gold text-2xl">
+                            <i class="fa-solid fa-basket-shopping"></i>
+                        </div>
+                        <p class="font-heading text-lg font-medium text-pine mb-1">Seu pedido está vazio</p>
+                        <p class="text-xs">Navegue pelo catálogo e adicione suas peças preferidas!</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = '';
+            cart.forEach(item => {
+                const fallbackImg = getSVGPlaceholder(item.name, item.category);
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'flex items-center gap-3 p-3 bg-white rounded-xl border border-gold-light/50 shadow-sm';
+                
+                itemDiv.innerHTML = `
+                    <img src="${item.image}" onerror="this.src='${fallbackImg}'" alt="${item.name}" class="w-16 h-16 object-cover rounded-lg bg-cream-card">
+                    
+                    <div class="flex-grow">
+                        <h4 class="font-heading font-semibold text-xs text-pine line-clamp-1">${item.name}</h4>
+                        <span class="text-xs text-crimson font-bold block mb-1">${formatMoney(item.price)}</span>
+                        
+                        <!-- Quantity Controller -->
+                        <div class="flex items-center gap-2">
+                            <button onclick="updateQuantity('${item.id}', -1)" class="w-5 h-5 rounded bg-cream-card border border-gold-light/60 text-taupe flex items-center justify-center text-xs hover:bg-gold-light/30">
+                                -
+                            </button>
+                            <span class="text-xs font-semibold px-1 text-taupe">${item.quantity}</span>
+                            <button onclick="updateQuantity('${item.id}', 1)" class="w-5 h-5 rounded bg-cream-card border border-gold-light/60 text-taupe flex items-center justify-center text-xs hover:bg-gold-light/30">
+                                +
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="text-right flex flex-col justify-between items-end h-16">
+                        <button onclick="removeFromCart('${item.id}')" class="text-taupe-muted hover:text-crimson text-xs">
+                            <i class="fa-regular fa-trash-can"></i>
+                        </button>
+                        <span class="font-bold text-xs text-pine font-heading">
+                            ${formatMoney(item.price * item.quantity)}
+                        </span>
+                    </div>
+                `;
+                container.appendChild(itemDiv);
+            });
+        }
+
+        // WhatsApp Checkout Order Link Generator
+        function sendWhatsAppOrder() {
+            if (cart.length === 0) {
+                alert("Seu pedido está vazio! Escolha algum produto primeiro.");
+                return;
+            }
+
+            const phone = "5585992060056";
+            let message = "🎄 *LIZ STUDIO - NOVO PEDIDO DE NATAL* 🎄\n\n";
+            message += "Olá! Gostaria de encomendar os seguintes itens do catálogo:\n\n";
+
+            let total = 0;
+            cart.forEach((item, index) => {
+                const subtotal = item.price * item.quantity;
+                total += subtotal;
+                message += `${index + 1}. *${item.name}*\n   • Qtd: ${item.quantity}x | Valor: R$ ${subtotal.toFixed(2).replace('.', ',')}\n`;
+            });
+
+            message += `\n💰 *VALOR TOTAL ESTIMADO:* R$ ${total.toFixed(2).replace('.', ',')}\n`;
+            message += "\nAguardo informações sobre prazos e envio. Obrigado!";
+
+            const encodedMessage = encodeURIComponent(message);
+            const whatsappUrl = `https://wa.me/${phone}?text=${encodedMessage}`;
+            window.open(whatsappUrl, '_blank');
+        }
+
+        // Quick View Modal Controllers
+        function openQuickView(productId) {
+            const product = productsData.find(p => p.id === productId);
+            if (!product) return;
+
+            const modal = document.getElementById('quickview-modal');
+            const content = document.getElementById('quickview-content');
+            const fallbackImg = getSVGPlaceholder(product.name, product.category);
+
+            content.innerHTML = `
+                <div class="flex flex-col gap-4">
+                    <div class="w-full h-56 rounded-xl overflow-hidden bg-cream-card relative border border-gold-light/40">
+                        <img src="${product.image}" onerror="this.src='${fallbackImg}'" alt="${product.name}" class="w-full h-full object-cover">
+                        <span class="absolute top-3 left-3 bg-cream/90 backdrop-blur-md text-pine font-medium text-xs px-3 py-1 rounded-full border border-gold-light/60">
+                            ${product.categoryName}
+                        </span>
+                    </div>
+
+                    <div>
+                        <h3 class="font-heading font-bold text-2xl text-pine mb-1">${product.name}</h3>
+                        <p class="text-xl font-bold font-heading text-crimson mb-3">${formatMoney(product.price)}</p>
+                        
+                        <p class="text-xs sm:text-sm text-taupe-muted leading-relaxed mb-6">
+                            ${product.description}
+                        </p>
+
+                        <div class="flex items-center gap-3">
+                            <button onclick="addToCart('${product.id}'); closeQuickView(); toggleCartDrawer();" class="flex-grow py-3 bg-pine hover:bg-pine-dark text-cream rounded-xl font-medium text-sm transition-colors shadow flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-basket-shopping text-gold"></i>
+                                <span>Adicionar ao Pedido</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            modal.classList.remove('hidden');
+        }
+
+        function closeQuickView() {
+            document.getElementById('quickview-modal').classList.add('hidden');
+        }
+
+        // Close modal on background click
+        document.getElementById('quickview-modal').addEventListener('click', function(e) {
+            if (e.target === this) closeQuickView();
+        });
+
+        // Initialize App
         window.addEventListener('DOMContentLoaded', () => {
             renderProducts();
             updateCartUI();
